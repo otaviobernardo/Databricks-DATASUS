@@ -269,7 +269,3 @@ Melhorias sugeridas:
 ## 📄 Licença
 
 Dados públicos do DATASUS/RIPSA - Ministério da Saúde do Brasil
-
----
-
-**Desenvolvido com ❤️ usando Databricks + Streamlit**
