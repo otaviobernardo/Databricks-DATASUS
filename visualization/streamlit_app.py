@@ -118,6 +118,9 @@ st.markdown('<div class="subtitle">Análise de Natalidade e Esperança de Vida n
 
 # ==================== PÁGINA: VISÃO GERAL ====================
 if page == "📊 Visão Geral":
+    with st.expander("ℹ️ Sobre esta visão"):
+        st.markdown("""Este dashboard consolida indicadores de saúde pública brasileira, analisando Taxa Bruta de Natalidade e Esperança de Vida ao Nascer para todas as UFs do Brasil.""")
+
     
     # Métricas principais
     col1, col2, col3, col4 = st.columns(4)
@@ -239,6 +242,9 @@ if page == "📊 Visão Geral":
 
 # ==================== PÁGINA: ANÁLISE POR UF ====================
 elif page == "🗺️ Análise por UF":
+    with st.expander("ℹ️ Como interpretar esta análise"):
+        st.markdown("""Compare os indicadores da UF selecionada com a média nacional para identificar diferenças e tendências ao longo do tempo.""")
+
     
     st.subheader("🗺️ Análise Detalhada por Unidade Federativa")
     
@@ -347,6 +353,9 @@ elif page == "🗺️ Análise por UF":
 
 # ==================== PÁGINA: EVOLUÇÃO TEMPORAL ====================
 elif page == "📈 Evolução Temporal":
+    with st.expander("ℹ️ Evolução temporal"):
+        st.markdown("""Os mapas de calor mostram a evolução dos indicadores por UF ao longo dos anos. Cores mais intensas representam valores maiores.""")
+
     
     st.subheader("📈 Análise da Evolução Temporal dos Indicadores")
     
@@ -445,6 +454,9 @@ elif page == "📈 Evolução Temporal":
 
 # ==================== PÁGINA: RANKINGS ====================
 elif page == "🏆 Rankings":
+    with st.expander("ℹ️ Sobre os rankings"):
+        st.markdown("""Os rankings destacam as UFs com melhores resultados para os indicadores selecionados.""")
+
     
     st.subheader("🏆 Rankings das Unidades Federativas")
     
@@ -527,6 +539,9 @@ elif page == "🏆 Rankings":
 
 # ==================== PÁGINA: COMPARATIVOS ====================
 elif page == "🔍 Comparativos":
+    with st.expander("ℹ️ Comparativos entre UFs"):
+        st.markdown("""Compare até 5 estados simultaneamente e avalie diferenças entre natalidade e esperança de vida.""")
+
     
     st.subheader("🔍 Comparativo entre UFs")
     
@@ -618,6 +633,9 @@ elif page == "🔍 Comparativos":
 
 # ==================== PÁGINA: QUALIDADE DOS DADOS ====================
 elif page == "⚠️ Qualidade dos Dados":
+    with st.expander("ℹ️ Qualidade dos dados"):
+        st.markdown("""Apresenta validações, registros rejeitados e métricas de qualidade aplicadas durante o processamento.""")
+
     
     st.subheader("⚠️ Análise de Qualidade dos Dados")
     
