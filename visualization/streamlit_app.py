@@ -113,7 +113,7 @@ with st.sidebar:
         st.success("Cache limpo!")
 
 # Header principal
-st.markdown('<div class="main-header">🏥 Dashboard de Indicadores de Saúde - DATASUS</div>', unsafe_allow_html=True)
+st.markdown('<div class="main-header">Dashboard de Indicadores de Saúde - DATASUS</div>', unsafe_allow_html=True)
 st.markdown('<div class="subtitle">Análise de Natalidade e Esperança de Vida no Brasil</div>', unsafe_allow_html=True)
 
 # ==================== PÁGINA: VISÃO GERAL ====================
