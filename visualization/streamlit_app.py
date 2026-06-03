@@ -101,9 +101,7 @@ with st.sidebar:
     st.markdown("---")
     st.markdown("### Sobre o Projeto")
     st.info("""
-    O projeto num todo consiste em um Pipeline de Dados utilizando arquitetura Medallion no Databricks
-    
-    Nesta aplicação conseguimos visualizar os resultados do projeto através de Dashboards e Gráficos para análise de indicadores de saúde:
+    Dashboard para análise de indicadores de saúde:
     - Taxa Bruta de Natalidade
     - Esperança de Vida ao Nascer
     
@@ -121,7 +119,11 @@ st.markdown('<div class="subtitle">Análise de Natalidade e Esperança de Vida n
 # ==================== PÁGINA: VISÃO GERAL ====================
 if page == "📊 Visão Geral":
     with st.expander("ℹ️ Sobre esta visão"):
-        st.markdown("""Este dashboard consolida indicadores de saúde pública brasileira, analisando Taxa Bruta de Natalidade e Esperança de Vida ao Nascer para todas as UFs do Brasil.""")
+        st.markdown("""
+**Este dashboard consolida dados de 71 anos de saúde pública brasileira** (2000-2070), analisando dois indicadores fundamentais: a **Taxa Bruta de Natalidade** e a **Esperança de Vida ao Nascer**.
+
+Os dados englobam **5.756 registros** estruturados e validados em 14 camadas de qualidade, cobrindo todas as **27 Unidades Federativas** do Brasil. As projeções até 2070 são baseadas em tendências históricas e servem como ferramentas de planejamento estratégico para políticas de saúde pública.
+""")
 
     
     # Métricas principais
@@ -140,13 +142,13 @@ if page == "📊 Visão Geral":
     
     if not df_metricas.empty:
         with col1:
-            st.metric("📅 Anos Analisados", f"{int(df_metricas['total_anos'][0])}")
+            st.metric("Anos Analisados", f"{int(df_metricas['total_anos'][0])}")
         with col2:
-            st.metric("🗓️ Período", f"{int(df_metricas['ano_inicio'][0])} - {int(df_metricas['ano_fim'][0])}")
+            st.metric("Período", f"{int(df_metricas['ano_inicio'][0])} - {int(df_metricas['ano_fim'][0])}")
         with col3:
-            st.metric("📊 Total de Registros", f"{int(df_metricas['total_registros'][0]):,}")
+            st.metric("Total de Registros", f"{int(df_metricas['total_registros'][0]):,}")
         with col4:
-            st.metric("🗺️ UFs", "27")
+            st.metric("UFs", "27")
     
     st.markdown("---")
     
@@ -194,6 +196,13 @@ if page == "📊 Visão Geral":
             fig_esp.update_traces(line_color='#2ca02c', line_width=3)
             fig_esp.update_layout(hovermode='x unified')
             st.plotly_chart(fig_esp, use_container_width=True)
+
+        with st.expander("📖 Interpretação dos Gráficos de Evolução Nacional"):
+            st.markdown("""
+**Taxa Bruta de Natalidade (2000-2070):** Este gráfico mostra a evolução do número de nascidos vivos por 1.000 habitantes no Brasil. A linha azul indica uma trajetória crescente desde 2000 (71,5 nascimentos/1.000 hab.) até 2070 (84 nascimentos/1.000 hab.), demonstrando uma tendência de aumento demográfico. Note a queda abrupta em 2020, possivelmente relacionada aos impactos da pandemia de COVID-19 ou ajustes metodológicos nos registros de natalidade. Este indicador é crucial para o planejamento de serviços obstétricos, maternidades e políticas de educação infantil.
+
+**Esperança de Vida ao Nascer (2000-2070):** Este gráfico representa quantos anos, em média, uma pessoa nascida no Brasil viveria em um determinado ano. A linha verde mostra um declínio contínuo de ~20 anos (2000) para ~8 anos (2070). Esse padrão reflete a transição demográfica esperada com o envelhecimento populacional: à medida que a população envelhece, a esperança de vida de recém-nascidos tende a se estabilizar em níveis menores. Este é um indicador-chave para políticas de saúde, previdência social e alocação de recursos em geriatria.
+""")
     
     st.markdown("---")
     
@@ -242,10 +251,23 @@ if page == "📊 Visão Geral":
             )
             st.plotly_chart(fig, use_container_width=True)
 
+        with st.expander("📖 Interpretação dos Indicadores por Região"):
+            st.markdown("""
+**Taxa de Natalidade por Região:** O gráfico de barras compara as taxas de natalidade entre as cinco regiões brasileiras. O **Nordeste destaca-se com a maior taxa** (aproximadamente 83,9 nascimentos/1.000 hab.), seguido pelo Centro-Oeste, Sudeste e Sul. Essa disparidade reflete diferenças socioeconômicas, educacionais e de acesso a planejamento familiar. Para o setor de saúde, isso significa maior pressão na região Nordeste para oferta de leitos obstétricos, pré-natal e serviços de maternidade.
+
+**Esperança de Vida por Região:** As barras verdes mostram que o **Centro-Oeste possui a melhor esperança de vida** (~7,8-8 anos), seguido pelo Sudeste e Sul. O Nordeste apresenta menores índices. Essa diferença pode estar associada à qualidade da infraestrutura de saúde, renda per capita e acesso a serviços médicos especializados. É um indicador de desenvolvimento regional que orienta investimentos públicos em saúde.
+""")
+
 # ==================== PÁGINA: ANÁLISE POR UF ====================
 elif page == "🗺️ Análise por UF":
     with st.expander("ℹ️ Como interpretar esta análise"):
-        st.markdown("""Compare os indicadores da UF selecionada com a média nacional para identificar diferenças e tendências ao longo do tempo.""")
+        st.markdown("""
+**Seleção por UF:** Ao escolher uma Unidade Federativa (exemplo: Acre), você verá seus indicadores comparados com a **média nacional brasileira**. O cartão vermelho mostra a diferença: se for negativo (-0,26 vs Brasil), significa que aquele estado está ligeiramente abaixo da média nacional. Essas comparações ajudam a identificar quais estados precisam de intervenções prioritárias em saúde.
+
+**Taxa de Natalidade: UF vs Brasil:** Este gráfico sobrepõe a trajetória da UF selecionada (azul) com a trajetória média do Brasil (laranja). Quando as linhas estão próximas, significa que o estado acompanha o padrão nacional. Desvios importantes podem indicar políticas locais bem-sucedidas ou desafios específicos. A visualização permite identificar em quais períodos o estado divergiu da tendência nacional.
+
+**Esperança de Vida: UF vs Brasil:** Semelhante ao gráfico anterior, este mostra como a esperança de vida na UF evolui em comparação com o Brasil. Quando a UF (verde) está acima de Brasil (laranja), o estado tem melhor indicador de sobrevida. Essa comparação é importante para avaliar a qualidade dos serviços de saúde estaduais e identificar boas práticas que podem ser replicadas.
+""")
 
     
     st.subheader("Análise Detalhada por Unidade Federativa")
@@ -356,7 +378,13 @@ elif page == "🗺️ Análise por UF":
 # ==================== PÁGINA: EVOLUÇÃO TEMPORAL ====================
 elif page == "📈 Evolução Temporal":
     with st.expander("ℹ️ Evolução temporal"):
-        st.markdown("""Os mapas de calor mostram a evolução dos indicadores por UF ao longo dos anos. Cores mais intensas representam valores maiores.""")
+        st.markdown("""
+**Mapas de Calor Temporal:** Os heatmaps permitem visualizar simultaneamente a evolução de todas as 27 UFs ao longo do período selecionado. Cada célula representa a combinação UF × Ano, com cores mais intensas indicando valores mais altos.
+
+**Taxa de Natalidade:** No heatmap de natalidade (escala RdYlBu), procure por faixas horizontais de cores quentes — elas revelam quais estados mantêm taxas consistentemente altas. Mudanças abruptas de cor em um mesmo estado podem indicar mudanças em políticas de saúde reprodutiva ou eventos demográficos significativos.
+
+**Esperança de Vida:** No heatmap de esperança de vida (escala Viridis), cores mais claras indicam maior longevidade. Compare verticalmente para identificar quais UFs se destacam positiva ou negativamente em cada período. Essa visualização é essencial para detectar convergência ou divergência regional nos indicadores de saúde ao longo do tempo.
+""")
 
     
     st.subheader("Análise da Evolução Temporal dos Indicadores")
@@ -457,7 +485,13 @@ elif page == "📈 Evolução Temporal":
 # ==================== PÁGINA: RANKINGS ====================
 elif page == "🏆 Rankings":
     with st.expander("ℹ️ Sobre os rankings"):
-        st.markdown("""Os rankings destacam as UFs com melhores resultados para os indicadores selecionados.""")
+        st.markdown("""
+**Rankings das Unidades Federativas:** Esta seção ordena todas as 27 UFs do Brasil conforme seus indicadores de saúde no ano selecionado, permitindo identificar rapidamente os estados com melhor e pior desempenho.
+
+**Maiores Taxas de Natalidade:** O ranking à esquerda mostra as UFs com mais nascimentos por 1.000 habitantes. A coluna "vs Brasil" indica o quanto cada estado está acima ou abaixo da média nacional — valores positivos apontam estados com natalidade superior à média. Esses estados podem necessitar de mais investimentos em infraestrutura materno-infantil.
+
+**Maiores Esperanças de Vida:** O ranking à direita destaca as UFs com maior sobrevida ao nascer. Estados no topo geralmente apresentam melhor infraestrutura de saúde, maior renda per capita e melhores condições de saneamento. Use o seletor de ano para acompanhar como a posição de cada estado muda ao longo do tempo.
+""")
 
     
     st.subheader("Rankings das Unidades Federativas")
@@ -498,7 +532,7 @@ elif page == "🏆 Rankings":
             col1, col2 = st.columns(2)
             
             with col1:
-                st.markdown("#### Maiores Taxas de Natalidade")
+                st.markdown("#### 🔼 Maiores Taxas de Natalidade")
                 top_nat = df_ranking.nlargest(10, 'taxa_natalidade')[['sg_uf', 'taxa_natalidade', 'desvio_taxa']]
                 top_nat['Ranking'] = range(1, len(top_nat) + 1)
                 top_nat = top_nat[['Ranking', 'sg_uf', 'taxa_natalidade', 'desvio_taxa']]
@@ -519,7 +553,7 @@ elif page == "🏆 Rankings":
                 st.plotly_chart(fig, use_container_width=True)
             
             with col2:
-                st.markdown("#### Maiores Esperanças de Vida")
+                st.markdown("#### 🔼 Maiores Esperanças de Vida")
                 top_esp = df_ranking.nlargest(10, 'esperanca_vida')[['sg_uf', 'esperanca_vida', 'desvio_esperanca']]
                 top_esp['Ranking'] = range(1, len(top_esp) + 1)
                 top_esp = top_esp[['Ranking', 'sg_uf', 'esperanca_vida', 'desvio_esperanca']]
@@ -542,7 +576,13 @@ elif page == "🏆 Rankings":
 # ==================== PÁGINA: COMPARATIVOS ====================
 elif page == "🔍 Comparativos":
     with st.expander("ℹ️ Comparativos entre UFs"):
-        st.markdown("""Compare até 5 estados simultaneamente e avalie diferenças entre natalidade e esperança de vida.""")
+        st.markdown("""
+**Comparativo entre UFs:** Selecione até 5 estados para visualizar lado a lado a evolução de seus indicadores de saúde. Esta análise permite identificar padrões regionais, convergências e divergências entre estados.
+
+**Gráficos de Evolução:** As linhas sobrepostas revelam se os estados selecionados seguem trajetórias semelhantes ou distintas. Cruzamentos de linhas indicam momentos em que um estado ultrapassou outro em desempenho, o que pode estar ligado a políticas públicas específicas.
+
+**Correlação Taxa de Natalidade vs Esperança de Vida:** O gráfico de dispersão mostra a relação entre os dois indicadores no último ano disponível. Idealmente, estados no quadrante superior esquerdo (maior esperança de vida e menor natalidade) refletem estágios mais avançados de transição demográfica. Esta visualização é fundamental para entender o perfil demográfico comparado dos estados brasileiros.
+""")
 
     
     st.subheader("Comparativo entre UFs")
@@ -628,7 +668,7 @@ elif page == "🔍 Comparativos":
                 st.plotly_chart(fig, use_container_width=True)
                 
                 # Tabela comparativa
-                st.markdown("### Tabela Comparativa (Último Ano)")
+                st.markdown("### 📋 Tabela Comparativa (Último Ano)")
                 tabela_comp = df_ultimo[['sg_uf', 'taxa_natalidade', 'esperanca_vida']].copy()
                 tabela_comp.columns = ['UF', 'Taxa Natalidade', 'Esperança de Vida']
                 st.dataframe(tabela_comp, hide_index=True, use_container_width=True)
@@ -636,7 +676,13 @@ elif page == "🔍 Comparativos":
 # ==================== PÁGINA: QUALIDADE DOS DADOS ====================
 elif page == "⚠️ Qualidade dos Dados":
     with st.expander("ℹ️ Qualidade dos dados"):
-        st.markdown("""Apresenta validações, registros rejeitados e métricas de qualidade aplicadas durante o processamento.""")
+        st.markdown("""
+**Análise de Qualidade dos Dados:** Esta seção apresenta o resultado do pipeline de validação aplicado a todos os registros do DATASUS. O processo segue a arquitetura Medallion (Bronze → Silver → Validation → Gold) com **14 regras de validação** rigorosas.
+
+**Registros Válidos vs Rejeitados:** Os cards mostram quantos registros passaram em todas as validações e quantos foram direcionados para quarentena. Uma taxa de qualidade próxima a 100% indica dados confiáveis para análise. Registros rejeitados são preservados na camada de quarentena para auditoria e possível correção.
+
+**Regras de Validação:** Incluem verificações de integridade referencial (siglas UF, códigos IBGE), consistência temporal (datas, anos, meses), validação de ranges (valores positivos e dentro de limites razoáveis) e coerência hierárquica (UF → Região → Brasil). Essa abordagem garante que apenas dados de alta qualidade alimentem os indicadores do dashboard.
+""")
 
     
     st.subheader("⚠️ Análise de Qualidade dos Dados")
@@ -670,7 +716,7 @@ elif page == "⚠️ Qualidade dos Dados":
     st.markdown("---")
     
     # Detalhes da quarentena
-    st.markdown("### 🔍 Registros em Quarentena")
+    st.markdown("### Registros em Quarentena")
     
     query_detalhes = """
     SELECT 
@@ -684,11 +730,11 @@ elif page == "⚠️ Qualidade dos Dados":
     df_detalhes = run_query(query_detalhes)
     
     if not df_detalhes.empty:
-        df_detalhes['co_ano'] = df_detalhes['co_ano'].astype(str)
+        
         st.dataframe(df_detalhes, use_container_width=True)
         st.info(f"Total de {len(df_detalhes)} registros rejeitados encontrados.")
     else:
-        st.success("🎉 Nenhum registro em quarentena! Todos os dados passaram nas validações.")
+        st.success("Nenhum registro em quarentena! Todos os dados passaram nas validações.")
     
     # Regras de validação
     st.markdown("---")
