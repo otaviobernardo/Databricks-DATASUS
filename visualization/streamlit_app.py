@@ -682,6 +682,7 @@ elif page == "⚠️ Qualidade dos Dados":
     df_detalhes = run_query(query_detalhes)
     
     if not df_detalhes.empty:
+        df_detalhes['co_ano'] = df_detalhes['co_ano'].astype(str)
         st.dataframe(df_detalhes, use_container_width=True)
         st.info(f"Total de {len(df_detalhes)} registros rejeitados encontrados.")
     else:
