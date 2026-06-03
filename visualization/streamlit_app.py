@@ -85,7 +85,7 @@ def run_query(query):
 
 # Sidebar
 with st.sidebar:
-    st.title("🏥 Dashboard DATASUS")
+    st.title("Dashboard DATASUS")
     st.markdown("---")
     
     page = st.selectbox(
@@ -149,7 +149,7 @@ if page == "📊 Visão Geral":
     st.markdown("---")
     
     # Gráfico: Evolução Brasil
-    st.subheader("📈 Evolução dos Indicadores Nacionais")
+    st.subheader("Evolução dos Indicadores Nacionais")
     
     query_brasil = """
     SELECT 
@@ -196,7 +196,7 @@ if page == "📊 Visão Geral":
     st.markdown("---")
     
     # Mapa de calor por região
-    st.subheader("🗺️ Indicadores Médios por Região (Último Ano)")
+    st.subheader("Indicadores Médios por Região (Último Ano)")
     
     query_regiao = """
     SELECT 
@@ -246,7 +246,7 @@ elif page == "🗺️ Análise por UF":
         st.markdown("""Compare os indicadores da UF selecionada com a média nacional para identificar diferenças e tendências ao longo do tempo.""")
 
     
-    st.subheader("🗺️ Análise Detalhada por Unidade Federativa")
+    st.subheader("Análise Detalhada por Unidade Federativa")
     
     # Seletor de UF
     query_ufs = "SELECT DISTINCT sg_uf FROM workspace.gold.indicadores_uf_ano ORDER BY sg_uf"
@@ -357,7 +357,7 @@ elif page == "📈 Evolução Temporal":
         st.markdown("""Os mapas de calor mostram a evolução dos indicadores por UF ao longo dos anos. Cores mais intensas representam valores maiores.""")
 
     
-    st.subheader("📈 Análise da Evolução Temporal dos Indicadores")
+    st.subheader("Análise da Evolução Temporal dos Indicadores")
     
     # Seletor de período
     query_anos = "SELECT DISTINCT co_ano FROM workspace.gold.indicadores_br_ano ORDER BY co_ano"
@@ -391,7 +391,7 @@ elif page == "📈 Evolução Temporal":
             df_evolucao['esperanca_vida'] = pd.to_numeric(df_evolucao['esperanca_vida'], errors='coerce')
             
             # Heatmap de evolução
-            st.markdown("### 🔥 Mapa de Calor: Taxa de Natalidade por UF ao Longo do Tempo")
+            st.markdown("### Mapa de Calor: Taxa de Natalidade por UF ao Longo do Tempo")
             
             pivot_nat = df_evolucao.pivot_table(
                 index='sg_uf',
@@ -409,7 +409,7 @@ elif page == "📈 Evolução Temporal":
             fig.update_layout(height=600)
             st.plotly_chart(fig, use_container_width=True)
             
-            st.markdown("### 🔥 Mapa de Calor: Esperança de Vida por UF ao Longo do Tempo")
+            st.markdown("### Mapa de Calor: Esperança de Vida por UF ao Longo do Tempo")
             
             pivot_esp = df_evolucao.pivot_table(
                 index='sg_uf',
@@ -428,7 +428,7 @@ elif page == "📈 Evolução Temporal":
             st.plotly_chart(fig, use_container_width=True)
             
             # Box plot por região
-            st.markdown("### 📊 Distribuição por Região")
+            st.markdown("### Distribuição por Região")
             
             col1, col2 = st.columns(2)
             
@@ -458,7 +458,7 @@ elif page == "🏆 Rankings":
         st.markdown("""Os rankings destacam as UFs com melhores resultados para os indicadores selecionados.""")
 
     
-    st.subheader("🏆 Rankings das Unidades Federativas")
+    st.subheader("Rankings das Unidades Federativas")
     
     # Seletor de ano
     query_anos = "SELECT DISTINCT co_ano FROM workspace.gold.indicadores_uf_ano ORDER BY co_ano DESC"
@@ -496,7 +496,7 @@ elif page == "🏆 Rankings":
             col1, col2 = st.columns(2)
             
             with col1:
-                st.markdown("#### 🔼 Maiores Taxas de Natalidade")
+                st.markdown("#### Maiores Taxas de Natalidade")
                 top_nat = df_ranking.nlargest(10, 'taxa_natalidade')[['sg_uf', 'taxa_natalidade', 'desvio_taxa']]
                 top_nat['Ranking'] = range(1, len(top_nat) + 1)
                 top_nat = top_nat[['Ranking', 'sg_uf', 'taxa_natalidade', 'desvio_taxa']]
@@ -517,7 +517,7 @@ elif page == "🏆 Rankings":
                 st.plotly_chart(fig, use_container_width=True)
             
             with col2:
-                st.markdown("#### 🔼 Maiores Esperanças de Vida")
+                st.markdown("#### Maiores Esperanças de Vida")
                 top_esp = df_ranking.nlargest(10, 'esperanca_vida')[['sg_uf', 'esperanca_vida', 'desvio_esperanca']]
                 top_esp['Ranking'] = range(1, len(top_esp) + 1)
                 top_esp = top_esp[['Ranking', 'sg_uf', 'esperanca_vida', 'desvio_esperanca']]
@@ -543,7 +543,7 @@ elif page == "🔍 Comparativos":
         st.markdown("""Compare até 5 estados simultaneamente e avalie diferenças entre natalidade e esperança de vida.""")
 
     
-    st.subheader("🔍 Comparativo entre UFs")
+    st.subheader("Comparativo entre UFs")
     
     # Seletor múltiplo de UFs
     query_ufs = "SELECT DISTINCT sg_uf FROM workspace.gold.indicadores_uf_ano ORDER BY sg_uf"
@@ -606,7 +606,7 @@ elif page == "🔍 Comparativos":
                     st.plotly_chart(fig, use_container_width=True)
                 
                 # Scatter plot - correlação
-                st.markdown("### 🎯 Correlação: Taxa de Natalidade vs Esperança de Vida")
+                st.markdown("### Correlação: Taxa de Natalidade vs Esperança de Vida")
                 
                 # Dados do último ano
                 ultimo_ano = df_comp['co_ano'].max()
@@ -626,7 +626,7 @@ elif page == "🔍 Comparativos":
                 st.plotly_chart(fig, use_container_width=True)
                 
                 # Tabela comparativa
-                st.markdown("### 📋 Tabela Comparativa (Último Ano)")
+                st.markdown("### Tabela Comparativa (Último Ano)")
                 tabela_comp = df_ultimo[['sg_uf', 'taxa_natalidade', 'esperanca_vida']].copy()
                 tabela_comp.columns = ['UF', 'Taxa Natalidade', 'Esperança de Vida']
                 st.dataframe(tabela_comp, hide_index=True, use_container_width=True)
@@ -689,7 +689,7 @@ elif page == "⚠️ Qualidade dos Dados":
     
     # Regras de validação
     st.markdown("---")
-    st.markdown("### 📋 Regras de Validação Implementadas")
+    st.markdown("### Regras de Validação Implementadas")
     
     regras = [
         "1. Validação de siglas UF (27 estados)",
