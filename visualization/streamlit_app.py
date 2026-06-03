@@ -101,7 +101,9 @@ with st.sidebar:
     st.markdown("---")
     st.markdown("### Sobre o Projeto")
     st.info("""
-    Dashboard para análise de indicadores de saúde:
+    O projeto num todo consiste em um Pipeline de Dados utilizando arquitetura Medallion no Databricks
+    
+    Nesta aplicação conseguimos visualizar os resultados do projeto através de Dashboards e Gráficos para análise de indicadores de saúde:
     - Taxa Bruta de Natalidade
     - Esperança de Vida ao Nascer
     
